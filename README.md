@@ -31,6 +31,17 @@ Docker'а на ноутбуке нет? Тогда локально работа
 | `make seed` | перезалить учебные данные |
 | `make help` | список всех команд |
 
+## Как проверить, что сервис жив
+
+| Команда | Что делает |
+|---|---|
+| `curl http://localhost:8080/health` | `GET /health` — отвечает, значит backend жив |
+| `make ps` | состояние контейнеров (`docker compose ps`): у `db` есть healthcheck, у `backend` — нет |
+| `make logs` | логи сервиса (`docker compose logs -f backend`), выход — `Ctrl+C` |
+
+Порт снаружи переопределяется переменной `APP_PORT` (`docker-compose.yml`, по умолчанию `8080`):
+тогда health — `http://localhost:$APP_PORT/health`.
+
 ## API
 
 | Метод | Путь | Зачем |
